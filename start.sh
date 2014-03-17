@@ -19,5 +19,4 @@ if [ ! -f /mysql-root-pw.txt ]; then
 	killall mysqld
 	sleep 10s
 fi
-mkdir $HOME
 supervisord -n
