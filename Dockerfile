@@ -3,7 +3,7 @@
 # VERSION       1
 
 # use the ubuntu base image provided by dotCloud
-FROM ubuntu:precise
+FROM ubuntu:trusty
 
 MAINTAINER Simon Morvan simon@icilalune.com
 
