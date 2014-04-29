@@ -8,19 +8,15 @@ FROM ubuntu:precise
 MAINTAINER Simon Morvan simon@icilalune.com
 
 # make sure the package repository is up to date
-RUN echo "deb http://mir1.ovh.net/ubuntu precise  main restricted universe multiverse" > /etc/apt/sources.list
-RUN echo "deb http://ftp.free.fr/mirrors/ftp.ubuntu.com/ubuntu precise  main restricted universe multiverse" > /etc/apt/sources.list
+RUN echo "deb http://mir1.ovh.net/ubuntu trusty  main restricted universe multiverse" > /etc/apt/sources.list
+RUN echo "deb http://ftp.free.fr/mirrors/ftp.ubuntu.com/ubuntu trusty  main restricted universe multiverse" >> /etc/apt/sources.list
 RUN apt-get update
 #RUN apt-get -y upgrade
-
-RUN dpkg-divert --local --rename --add /sbin/initctl
-RUN rm /sbin/initctl
-RUN ln -s /bin/true /sbin/initctl
 
 RUN DEBIAN_FRONTEND=noninteractive apt-get -y install  python-setuptools vim-tiny python-pip
 RUN easy_install supervisor
 
-RUN DEBIAN_FRONTEND=noninteractive apt-get -y install bzip2 git mysql-client mysql-server apache2 libapache2-mod-php5 pwgen php5-mysql php-apc php5-gd php5-curl php5-memcache php5-xdebug php-pear memcached mc autoconf libmagickwand-dev pngnq pngcrush pngquant libmagickwand-dev 
+RUN DEBIAN_FRONTEND=noninteractive apt-get -y install bzip2 curl git mysql-client mysql-server apache2 libapache2-mod-php5 pwgen php5-mysql php-apc php5-gd php5-curl php5-memcache php5-xdebug php-pear memcached mc autoconf libmagickwand-dev pngnq pngcrush pngquant libmagickwand-dev wget
 RUN pip install git-review
 
 RUN cd /usr/local ; git clone http://github.com/drush-ops/drush.git --branch 6.x
