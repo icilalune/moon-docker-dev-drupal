@@ -43,6 +43,7 @@ ADD ./start.sh /start.sh
 ADD ./foreground.sh /etc/apache2/foreground.sh
 ADD ./supervisord.conf /etc/supervisord.conf
 ADD ./xdebug.ini /etc/php5/conf.d/xdebug.ini
+ADD ./vhost.conf /etc/apache2/sites-available/000-default.conf
 
 
 RUN chmod 755 /start.sh /etc/apache2/foreground.sh
