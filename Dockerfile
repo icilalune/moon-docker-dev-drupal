@@ -42,7 +42,7 @@ RUN sed -i "s/^bind-address/#bind-address/" /etc/mysql/my.cnf
 ADD ./start.sh /start.sh
 ADD ./foreground.sh /etc/apache2/foreground.sh
 ADD ./supervisord.conf /etc/supervisord.conf
-ADD ./xdebug.ini /etc/php5/conf.d/xdebug.ini
+ADD ./xdebug.ini /etc/apache2/conf.d/20-xdebug.ini
 ADD ./vhost.conf /etc/apache2/sites-available/000-default.conf
 
 
