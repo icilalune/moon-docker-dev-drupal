@@ -16,7 +16,7 @@ RUN apt-get update
 RUN DEBIAN_FRONTEND=noninteractive apt-get -y install  python-setuptools vim-tiny python-pip
 RUN easy_install supervisor
 
-RUN DEBIAN_FRONTEND=noninteractive apt-get -y install bzip2 curl git mysql-client mysql-server apache2 libapache2-mod-php5 pwgen php5-mysql php-apc php5-gd php5-curl php5-memcache php5-xdebug php-pear memcached mc autoconf libmagickwand-dev pngnq pngcrush pngquant libmagickwand-dev wget
+RUN DEBIAN_FRONTEND=noninteractive apt-get -y install bzip2 curl git mysql-client mysql-server apache2 libapache2-mod-php5 pwgen php5-mysql php-apc php5-gd php5-curl php5-dev php5-memcache php5-xdebug php-pear memcached mc autoconf libmagickwand-dev pngnq pngcrush pngquant libmagickwand-dev wget
 RUN pip install git-review
 
 RUN cd /usr/local ; git clone http://github.com/drush-ops/drush.git --branch 6.x
@@ -31,6 +31,10 @@ RUN pear channel-discover pear.phpunit.de
 RUN pear channel-discover pear.symfony.com
 RUN pear channel-discover pear.netpirates.net
 RUN pear install --alldeps pear.phpunit.de/phpcpd
+
+RUN pecl install uploadprogress
+RUN echo "extension=uploadprogress.so" >> /etc/php5/mods-available/uploadprogress.conf
+RUN ln -s /etc/php5/mods-available/uploadprogress.conf /etc/php5/apache2/conf.d/30-uploadprogress.ini
 
 RUN drush dl coder --destination=/usr/local
 RUN ln -s /usr/local/coder/coder_sniffer/Drupal /usr/share/php/PHP/CodeSniffer/Standards/
