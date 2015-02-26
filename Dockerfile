@@ -22,7 +22,11 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get -y install bzip2 curl git mysql-clien
 
 RUN a2enmod rewrite
 
-RUN cd /usr/local ; git clone http://github.com/drush-ops/drush.git --branch 6.x
+RUN cd /usr/local ; curl -sS https://getcomposer.org/installer | php
+RUN chmod +x /usr/local/composer.phar ; ln -s /usr/local/composer.phar /usr/local/bin/composer
+
+RUN cd /usr/local ; git clone http://github.com/drush-ops/drush.git --branch master
+RUN cd /usr/local/drush ; composer install
 RUN ln -s /usr/local/drush/drush /usr/bin/drush
 
 
@@ -30,10 +34,7 @@ RUN pear install PHP_CodeSniffer
 RUN pear channel-discover pear.phpmd.org
 RUN pear channel-discover pear.pdepend.org
 RUN pear install --alldeps phpmd/PHP_PMD
-RUN pear channel-discover pear.phpunit.de
-RUN pear channel-discover pear.symfony.com
-RUN pear channel-discover pear.netpirates.net
-RUN pear install --alldeps pear.phpunit.de/phpcpd
+RUN cd /usr/local && wget https://phar.phpunit.de/phpcpd.phar && chmod +x phpcpd.phar && ln -s /usr/local/phpcpd.phar /usr/local/bin/phpcpd
 
 RUN pecl install uploadprogress
 RUN echo "extension=uploadprogress.so" > /etc/php5/mods-available/uploadprogress.conf
