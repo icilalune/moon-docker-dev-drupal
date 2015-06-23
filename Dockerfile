@@ -7,14 +7,7 @@ FROM ubuntu:trusty
 
 MAINTAINER Simon Morvan simon@icilalune.com
 
-# make sure the package repository is up to date
-RUN echo "deb http://mir1.ovh.net/ubuntu trusty  main restricted universe multiverse" > /etc/apt/sources.list
-RUN echo "deb http://ftp.free.fr/mirrors/ftp.ubuntu.com/ubuntu trusty  main restricted universe multiverse" >> /etc/apt/sources.list
-RUN echo "deb http://mir1.ovh.net/ubuntu trusty-updates  main restricted universe multiverse" >> /etc/apt/sources.list
-RUN echo "deb http://ftp.free.fr/mirrors/ftp.ubuntu.com/ubuntu trusty-updates  main restricted universe multiverse" >> /etc/apt/sources.list
 RUN apt-get update
-#RUN apt-get -y upgrade
-
 RUN DEBIAN_FRONTEND=noninteractive apt-get -y install  python-setuptools vim-tiny python-pip
 RUN easy_install supervisor
 
