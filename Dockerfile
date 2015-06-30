@@ -16,6 +16,7 @@ RUN apt-get update && apt-get -y install \
         bzip2 \
         curl \
         git \
+        imagemagick \
         libapache2-mod-php5 \
         libmagickwand-dev \
         mysql-client \
