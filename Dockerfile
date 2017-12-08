@@ -3,17 +3,23 @@ FROM moonscale/runner-drupal:php7
 RUN docker-php-pecl-install \
         xdebug
 
-RUN pear install PHP_CodeSniffer
-
-# Install phpcpd
-RUN pear channel-discover pear.phpmd.org
-RUN pear channel-discover pear.pdepend.org
-RUN pear install --alldeps phpmd/PHP_PMD
-RUN cd /usr/local && wget https://phar.phpunit.de/phpcpd.phar && chmod +x phpcpd.phar && ln -s /usr/local/phpcpd.phar /usr/local/bin/phpcpd
-
-# Install coder
-RUN drush dl coder --destination=/usr/local \
-        && ln -s /usr/local/coder/coder_sniffer/Drupal /usr/local/lib/php/PHP/CodeSniffer/Standards/
+# Install phpcs, phpcbf, phpmd, phpcpd
+# Install coder module through drush
+RUN curl -OL https://squizlabs.github.io/PHP_CodeSniffer/phpcs.phar \
+	&& chmod +x phpcs.phar \
+	&& mv phpcs.phar /usr/local/bin/phpcs \
+	&& curl -OL https://squizlabs.github.io/PHP_CodeSniffer/phpcbf.phar \
+	&& chmod +x phpcbf.phar \
+	&& mv phpcbf.phar /usr/local/bin/phpcbf \
+	&& wget -c http://static.phpmd.org/php/latest/phpmd.phar \
+	&& chmod +x phpmd.phar \
+	&& mv phpmd.phar /usr/local/bin/phpmd \
+	&& wget https://phar.phpunit.de/phpcpd.phar \
+	&& chmod +x phpcpd.phar \
+	&& mv phpcpd.phar /usr/local/bin/phpcpd \
+	&& drush dl coder --destination=/usr/local \
+    && mkdir -p /usr/local/lib/php/PHP/CodeSniffer/Standards \
+    && ln -s /usr/local/coder/coder_sniffer/Drupal /usr/local/lib/php/PHP/CodeSniffer/Standards/
 
 RUN rm -rf /var/www/html && ln -s /project/www /var/www/html
 
