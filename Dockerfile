@@ -1,4 +1,4 @@
-FROM moonscale/runner-drupal:latest
+FROM moonscale/runner-drupal:php5
 
 RUN docker-php-pecl-install \
         xdebug
